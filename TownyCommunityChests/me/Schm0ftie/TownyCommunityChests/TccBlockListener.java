@@ -2,19 +2,30 @@ package me.Schm0ftie.TownyCommunityChests;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class TccBlockListener extends BlockListener {
+public class TccBlockListener implements Listener {
 
+	TownyCommunityChests plugin;
+	
+	public TccBlockListener(TownyCommunityChests plugin){
+		Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
+		this.plugin = plugin;
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onSignChange(SignChangeEvent event){
 		Player player = event.getPlayer();
 		int maxAmount = 0;
@@ -38,6 +49,7 @@ public class TccBlockListener extends BlockListener {
 		event.setLine(2, Text.EMPTY_STRING + maxAmount);
 	}
 	
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockDamage(BlockDamageEvent event){
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
