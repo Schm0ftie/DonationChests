@@ -127,8 +127,11 @@ public class TccAction {
 		if(currentAmount + amountInHand > maxAmount){
 			balance = currentAmount + amountInHand - maxAmount;
 			ItemStack item = new ItemStack(iStack.getType(), amountInHand - balance);
+			item.setDurability(iStack.getDurability());
 			inv.addItem(item);
-			return new ItemStack(iStack.getType(), balance);
+			ItemStack returnItems = new ItemStack (iStack.getType(), balance);
+			returnItems.setDurability(iStack.getDurability());
+			return returnItems;
 		}
 		inv.addItem(iStack);
 		return null;
