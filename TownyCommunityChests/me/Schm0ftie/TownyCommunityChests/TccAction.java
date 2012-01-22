@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class TccAction {
@@ -112,5 +113,24 @@ public class TccAction {
 			return 0;
 		}
 		return Integer.parseInt(line.substring(indexStart,indexEnd));
+	}
+	
+	public static ItemStack myAddItem(ItemStack iStack, Inventory inv, int maxAmount){
+		int currentAmount = 0;
+		int amountInHand = iStack.getAmount();
+		int balance = 0;
+		for (ItemStack itemStackChest: inv.getContents()){
+			if (itemStackChest != null){
+				currentAmount = currentAmount + itemStackChest.getAmount();
+			}
+		}
+		if(currentAmount + amountInHand > maxAmount){
+			balance = currentAmount + amountInHand - maxAmount;
+			ItemStack item = new ItemStack(iStack.getType(), amountInHand - balance);
+			inv.addItem(item);
+			return new ItemStack(iStack.getType(), balance);
+		}
+		inv.addItem(iStack);
+		return null;
 	}
 }

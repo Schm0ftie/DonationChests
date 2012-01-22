@@ -85,21 +85,33 @@ public class TccBlockListener implements Listener {
 					TccAction.updateProgress(sign, chest);
 					Inventory inv = chest.getInventory();
 					player.setItemInHand(null);
-					if (TccAction.parseCurrAmount(sign.getLine(2)) >= TccAction.parseMaxAmount(sign.getLine(2))){
+					int maxAmount = TccAction.parseMaxAmount(sign.getLine(2));
+					if (TccAction.parseCurrAmount(sign.getLine(2)) >= maxAmount){
 						player.sendMessage(Text.NO_DONATION_CHEST_FULL);
 						player.setItemInHand(holding);
 						return;
 					}
-					HashMap<Integer,ItemStack> itemsLeft = inv.addItem(holding);
-					if (itemsLeft.get(0) != null){
-						player.setItemInHand(itemsLeft.get(0));
+					if ( maxAmount != inv.getSize()*holding.getMaxStackSize()){
+						player.sendMessage("IF - maxAmount: " + maxAmount + " inv.getSize(): " + inv.getSize());
+						ItemStack cStack = TccAction.myAddItem(holding, inv, maxAmount);
+						if (cStack != null){
+							player.setItemInHand(cStack);
+						}
+						TccAction.updateProgress(sign, chest);
+						player.sendMessage(Text.DONATED);
 					}
-					if (player.getItemInHand().getAmount() == amount){
-						player.sendMessage(Text.NO_DONATION_CHEST_FULL);
-						return;
+					else{
+						HashMap<Integer,ItemStack> itemsLeft = inv.addItem(holding);
+						if (itemsLeft.get(0) != null){
+							player.setItemInHand(itemsLeft.get(0));
+						}
+						if (player.getItemInHand().getAmount() == amount){
+							player.sendMessage(Text.NO_DONATION_CHEST_FULL);
+							return;
+						}
+						TccAction.updateProgress(sign, chest);
+						player.sendMessage(Text.DONATED);
 					}
-					TccAction.updateProgress(sign, chest);
-					player.sendMessage(Text.DONATED);
 				}
 			}
 		}
