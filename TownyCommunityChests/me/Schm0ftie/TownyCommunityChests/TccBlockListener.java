@@ -75,6 +75,14 @@ public class TccBlockListener implements Listener {
 			
 			if (sign.getLine(0).equalsIgnoreCase(Text.TAG_COLORED)){
 				ItemStack holding = player.getItemInHand();
+				if (holding.getType() == Material.AIR){
+					Chest chest = TccAction.getChest(sign.getBlock());
+					if (chest == null){
+						return;
+					}
+					TccAction.updateProgress(sign, chest);
+					return;
+				}
 				int amount = holding.getAmount();
 				if (TccAction.isFilteredItem(holding, sign.getLine(1))){
 					Chest chest = TccAction.getChest(sign.getBlock());
