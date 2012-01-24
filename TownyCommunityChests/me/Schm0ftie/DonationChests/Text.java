@@ -1,15 +1,15 @@
-package me.Schm0ftie.TownyCommunityChests;
+package me.Schm0ftie.DonationChests;
 
 import org.bukkit.ChatColor;
 
 public class Text {
 
-	public static final String TAG = "[TCC]";
-	public static final String TAG_COLORED = ChatColor.AQUA +"[TCC]";
+	public static final String TAG = "[DC]";
+	public static final String TAG_COLORED = ChatColor.AQUA +"[DC]";
 	
 	
-	public static final String CONSOLE_ENABLED = TAG + " Towny Community Chests loaded!";
-	public static final String CONSOLE_DISABLED = TAG + " Towny Community Chests unloaded!";
+	public static final String CONSOLE_ENABLED = TAG + " Donation Chests loaded!";
+	public static final String CONSOLE_DISABLED = TAG + " Donation Chests unloaded!";
 	
 	public static final String CREATION_TEXT_1 = "To set up the filter punsh the sign with the item you want.";
 	public static final String CREATION_TEXT_2 = "To allow all items punsh it without holding an item.";

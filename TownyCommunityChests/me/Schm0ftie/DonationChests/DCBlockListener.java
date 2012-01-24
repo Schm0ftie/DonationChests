@@ -1,4 +1,4 @@
-package me.Schm0ftie.TownyCommunityChests;
+package me.Schm0ftie.DonationChests;
 
 import java.util.HashMap;
 
@@ -16,11 +16,11 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class TccBlockListener implements Listener {
+public class DCBlockListener implements Listener {
 
-	TownyCommunityChests plugin;
+	DonationChests plugin;
 	
-	public TccBlockListener(TownyCommunityChests plugin){
+	public DCBlockListener(DonationChests plugin){
 		Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
 		this.plugin = plugin;
 	}
@@ -37,7 +37,7 @@ public class TccBlockListener implements Listener {
 			maxAmount = Integer.parseInt(event.getLine(2));
 		}
 		Block block = event.getBlock();
-		Chest chest = TccAction.getChest(block);
+		Chest chest = DCAction.getChest(block);
 		if (chest == null){
 			player.sendMessage(Text.ERROR_NO_CHEST);
 			block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SIGN, 1));
@@ -76,36 +76,36 @@ public class TccBlockListener implements Listener {
 			if (sign.getLine(0).equalsIgnoreCase(Text.TAG_COLORED)){
 				ItemStack holding = player.getItemInHand();
 				if (holding.getType() == Material.AIR){
-					Chest chest = TccAction.getChest(sign.getBlock());
+					Chest chest = DCAction.getChest(sign.getBlock());
 					if (chest == null){
 						return;
 					}
-					TccAction.updateProgress(sign, chest);
+					DCAction.updateProgress(sign, chest);
 					return;
 				}
 				int amount = holding.getAmount();
-				if (TccAction.isFilteredItem(holding, sign.getLine(1))){
-					Chest chest = TccAction.getChest(sign.getBlock());
+				if (DCAction.isFilteredItem(holding, sign.getLine(1))){
+					Chest chest = DCAction.getChest(sign.getBlock());
 					if (chest == null){
 						player.sendMessage(Text.ERROR_CHEST_MISSING);
 						return;
 					}
-					TccAction.updateProgress(sign, chest);
+					DCAction.updateProgress(sign, chest);
 					Inventory inv = chest.getInventory();
 					player.setItemInHand(null);
-					int maxAmount = TccAction.parseMaxAmount(sign.getLine(2));
-					if (TccAction.parseCurrAmount(sign.getLine(2)) >= maxAmount){
+					int maxAmount = DCAction.parseMaxAmount(sign.getLine(2));
+					if (DCAction.parseCurrAmount(sign.getLine(2)) >= maxAmount){
 						player.sendMessage(Text.NO_DONATION_CHEST_FULL);
 						player.setItemInHand(holding);
 						return;
 					}
 					if ( maxAmount != inv.getSize()*holding.getMaxStackSize()){
 						player.sendMessage("IF - maxAmount: " + maxAmount + " inv.getSize(): " + inv.getSize());
-						ItemStack cStack = TccAction.myAddItem(holding, inv, maxAmount);
+						ItemStack cStack = DCAction.myAddItem(holding, inv, maxAmount);
 						if (cStack != null){
 							player.setItemInHand(cStack);
 						}
-						TccAction.updateProgress(sign, chest);
+						DCAction.updateProgress(sign, chest);
 						player.sendMessage(Text.DONATED);
 					}
 					else{
@@ -117,7 +117,7 @@ public class TccBlockListener implements Listener {
 							player.sendMessage(Text.NO_DONATION_CHEST_FULL);
 							return;
 						}
-						TccAction.updateProgress(sign, chest);
+						DCAction.updateProgress(sign, chest);
 						player.sendMessage(Text.DONATED);
 					}
 				}

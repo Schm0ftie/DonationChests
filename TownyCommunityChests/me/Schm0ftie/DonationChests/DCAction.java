@@ -1,4 +1,4 @@
-package me.Schm0ftie.TownyCommunityChests;
+package me.Schm0ftie.DonationChests;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,21 +9,21 @@ import org.bukkit.block.Sign;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class TccAction {
+public class DCAction {
 	
 	private static boolean isLargeChest(Block block){
 		Location location = block.getLocation();
 		World world = location.getWorld();
-		if (world.getBlockTypeIdAt(location.getBlockX() + 1 , location.getBlockY(), location.getBlockZ()) == TownyCommunityChests.chest_id){
+		if (world.getBlockTypeIdAt(location.getBlockX() + 1 , location.getBlockY(), location.getBlockZ()) == DonationChests.chest_id){
 			return true;
 		}
-		if (world.getBlockTypeIdAt(location.getBlockX() - 1 , location.getBlockY(), location.getBlockZ()) == TownyCommunityChests.chest_id){
+		if (world.getBlockTypeIdAt(location.getBlockX() - 1 , location.getBlockY(), location.getBlockZ()) == DonationChests.chest_id){
 			return true;
 		}
-		if (world.getBlockTypeIdAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() + 1) == TownyCommunityChests.chest_id){
+		if (world.getBlockTypeIdAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() + 1) == DonationChests.chest_id){
 			return true;
 		}
-		if (world.getBlockTypeIdAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() - 1) == TownyCommunityChests.chest_id){
+		if (world.getBlockTypeIdAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() - 1) == DonationChests.chest_id){
 			return true;
 		}
 		return false;
@@ -39,16 +39,16 @@ public class TccAction {
 		Block bl3 = world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() + 1);
 		Block bl4 = world.getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ() - 1);
 	
-		if (bl1.getTypeId() == TownyCommunityChests.chest_id){
+		if (bl1.getTypeId() == DonationChests.chest_id){
 			return (Chest) bl1;
 		}
-		if (bl2.getTypeId() == TownyCommunityChests.chest_id){
+		if (bl2.getTypeId() == DonationChests.chest_id){
 			return (Chest) bl2;
 		}
-		if (bl3.getTypeId() == TownyCommunityChests.chest_id){
+		if (bl3.getTypeId() == DonationChests.chest_id){
 			return (Chest) bl3;
 		}
-		if (bl4.getTypeId() == TownyCommunityChests.chest_id){
+		if (bl4.getTypeId() == DonationChests.chest_id){
 			return (Chest) bl4;
 		}
 		return null;
